@@ -44,3 +44,36 @@ export interface Asset {
   value: number;
   type: string; // e.g., "Stock", "Bond", "Real Estate"
 }
+
+// Function 2
+export function findLargestHolding(assets: Asset[]): Asset | null {
+  if (assets.length === 0) return null;
+
+  return assets.reduce((largest, asset) =>
+    asset.value > largest.value ? asset : largest
+  );
+}
+
+export interface AssetAllocation {
+  name: string;
+  type: string;
+  value: number;
+  percentage: number;
+}
+
+// Function 3
+export function calculateAssetAllocation(assets: Asset[]): AssetAllocation[] {
+  const totalValue = assets.reduce((sum, asset) => sum + asset.value, 0);
+
+  if (totalValue === 0) {
+    return assets.map(asset => ({
+      ...asset,
+      percentage: 0
+    }));
+  }
+
+  return assets.map(asset => ({
+    ...asset,
+    percentage: (asset.value / totalValue) * 100
+  }));
+}
